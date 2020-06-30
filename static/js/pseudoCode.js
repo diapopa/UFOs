@@ -12,6 +12,7 @@ function buildTable(data) {
   data.forEach((dataRow) => {
     // Append a row to the table body
     let row = tbody.append("tr");
+
     // Loop through each field in the dataRow and add each value as a table cell (td)
     Object.values(dataRow).forEach((val) => {
       let cell = row.append("td");
@@ -22,7 +23,7 @@ function buildTable(data) {
 
 // Keep track of all filters
 var filters = {};
-var filtersList=[]
+
 // This function will replace your handleClick function
 function updateFilters() {
 
@@ -32,36 +33,37 @@ function updateFilters() {
   let state = d3.select("#state").property("value");
   let country = d3.select("#country").property("value");
   let shape = d3.select("#shape").property("value");
+  let filteredData = tableData;
 
   // If a filter value was entered then add that filterId and value to the filters list. Otherwise, clear that filter from the filters object
   if (date) {
-    filters["datetime"] = date;
+    filters[datetime] = date;
   } else {
-    filters["datetime"] = ""
+    filters[datetime] = ""
   };
 
   if (city) {
-    filters["city"] = city;
+    filters[city] = city;
   } else {
-    filters["city"] = ""
+    filters[city] = ""
   };
 
   if (state) {
-    filters["state"] = state;
+    filters[state] = state;
   } else {
-    filters["state"] = ""
+    filters[state] = ""
   };
 
   if (country) {
-    filters["country"] = country;
+    filters[country] = country;
   } else {
-    filters["country"] = ""
+    filters[country] = ""
   };
 
   if (shape) {
-    filters["shape"] = shape;
+    filters[shape] = shape;
   } else {
-    filters["shape"] = ""
+    filters[shape] = ""
   };
 
   // Call function to apply all filters and rebuild the table
@@ -73,9 +75,9 @@ function filterTable() {
   // Set the filteredData to the tableData
   let filteredData = tableData;
   // Loop through all of the filters and keep any data that matches the filter values
-  Object.keys(filters).forEach((filter) => {
-    if (filters[filter] !=="") {
-      filteredData = filteredData.filter(row => row[filter] === filters[filter]);
+  filters.forEach((filter) => {
+    if (filters[filter] =! "") {
+      filteredData = filteredData.filter(row => row.filter === filters[filter]);
     };
   });
   // Finally, rebuild the table using the filtered Data
